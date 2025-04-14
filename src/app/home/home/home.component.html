@@ -1,0 +1,11 @@
+<h1>Welcome ..............</h1>
+<h2>Your Notes</h2>
+
+<div class="notes-container">
+    <div *ngFor="let note of notes" class="note-card">
+        <h2>{{ note.title }}</h2>
+        <p>{{ note.content }}</p>
+        <small>Category: {{ note.category }} | Priority: {{ note.priority }}</small>
+        <div class="tags">Tags: {{ note.tags }}</div>
+    </div>
+    </div>

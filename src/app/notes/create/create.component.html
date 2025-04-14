@@ -1,0 +1,87 @@
+<div class="card my-5 container shadow-sm">
+    <div class="card-body text-center">
+      <h4>Create Note</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+        
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" formControlName="title">
+          <div *ngIf="noteForm.get('title').errors && (noteForm.get('title').dirty || noteForm.get('title').touched)" class="invalid-feedback d-block">
+            <p *ngIf="noteForm.get('title').errors.required">Title is required</p>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label>Content</label>
+          <textarea class="form-control" formControlName="content" rows="4"></textarea>
+          <div *ngIf="noteForm.get('content').errors && (noteForm.get('content').dirty || noteForm.get('content').touched)" class="invalid-feedback d-block">
+            <p *ngIf="noteForm.get('content').errors.required">Content is required</p>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label>Category</label>
+          <select class="form-control" formControlName="category">
+            <option value="">Select a category</option>
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+            <option value="important">Important</option>
+          </select>
+          <div *ngIf="noteForm.get('category').errors && (noteForm.get('category').dirty || noteForm.get('category').touched)" class="invalid-feedback d-block">
+            <p *ngIf="noteForm.get('category').errors.required">Category is required</p>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label>Priority</label>
+          <select class="form-control" formControlName="priority">
+            <option value="">Select priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+          <div *ngIf="noteForm.get('priority').errors && (noteForm.get('priority').dirty || noteForm.get('priority').touched)" class="invalid-feedback d-block">
+            <p *ngIf="noteForm.get('priority').errors.required">Priority is required</p>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label>Tags (comma separated)</label>
+          <input type="text" class="form-control" formControlName="tags">
+          <div *ngIf="noteForm.get('tags').errors && (noteForm.get('tags').dirty || noteForm.get('tags').touched)" class="invalid-feedback d-block">
+            <p *ngIf="noteForm.get('tags').errors.required">Tags are required</p>
+          </div>
+        </div>
+  
+        <div class="d-flex">
+          <!-- Save Button -->
+          <button type="button" class="btn btn-success" 
+                  [disabled]="noteForm.invalid || isLoading"
+                  (click)="confirmAction('save')">
+            {{ isLoading ? 'Saving...' : 'Save' }}
+          </button>
+        
+          <!-- Update Button -->
+          <button type="button" class="btn btn-danger" (click)="confirmAction('update')">
+            Update
+          </button>
+        
+          <!-- Cancel Button -->
+          <button type="button" class="btn btn-warning" (click)="confirmAction('cancel')">
+            Cancel
+          </button>
+        </div>
+        
+        
+  
+      </form>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+  
+
+  
