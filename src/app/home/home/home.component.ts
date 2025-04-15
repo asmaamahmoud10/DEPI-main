@@ -1,4 +1,57 @@
+// import { Component, OnInit } from '@angular/core';
+// import { NoteService } from 'src/app/notes/note.service';
+
+// @Component({
+//   selector: 'app-home',
+//   templateUrl: './home.component.html',
+//   styleUrls: ['./home.component.scss']
+// })
+// export class HomeComponent implements OnInit {
+//   notes: any[] = [];
+
+//   constructor(private noteService: NoteService) {}
+
+//   ngOnInit() {
+//     this.noteService.getNotes().subscribe((data) => {
+//       this.notes = data;
+//     });
+//   }
+
+//   noteToDelete: any = null;
+
+// viewNote(note: any) {
+//   console.log("Viewing note", note);
+// }
+
+// editNote(note: any) {
+//   console.log("Editing note", note);
+// }
+
+// confirmDelete(note: any) {
+//   this.noteToDelete = note;
+// }
+
+// cancelDelete() {
+//   this.noteToDelete = null;
+// }
+
+// deleteNote(note: any) {
+//   this.noteService.deleteNote(note.id).subscribe({
+//     next: () => {
+//       this.notes = this.notes.filter(n => n.id !== note.id);
+//       this.noteToDelete = null;
+//     },
+//     error: (err) => {
+//       console.error('Error deleting note:', err);
+//       alert('There is an error.');
+//     }
+//   });
+// }
+// }
+
+
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 import { NoteService } from 'src/app/notes/note.service';
 
 @Component({
@@ -9,12 +62,18 @@ import { NoteService } from 'src/app/notes/note.service';
 export class HomeComponent implements OnInit {
   notes: any[] = [];
 
-  constructor(private noteService: NoteService) {}
+  constructor(private noteService: NoteService,private authService: AuthService) {}
 
   ngOnInit() {
-    this.noteService.getNotes().subscribe((data) => {
-      this.notes = data;
-    });
+    // استرجاع التوكن من localStorage واستخدامه عند إرسال الطلبات
+    const token = this.authService.getToken();
+    if (token) {
+      this.noteService.getNotes(token).subscribe((data) => {
+        this.notes = data;
+      });
+    } else {
+      console.log('User is not authenticated');
+    }
   }
 
   noteToDelete: any = null;
@@ -44,8 +103,8 @@ deleteNote(note: any) {
     error: (err) => {
       console.error('Error deleting note:', err);
       alert('There is an error.');
-    }
-  });
+    }
+  });
 }
 
 

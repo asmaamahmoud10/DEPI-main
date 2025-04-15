@@ -1,4 +1,3 @@
-// src/app/pages/login/login.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -18,12 +17,12 @@ export class LoginComponent {
   login() {
     this.auth.login(this.email, this.password).subscribe({
       next: (res) => {
-        this.auth.setToken(res.token);
-        this.router.navigate(['/home']);
+        this.auth.setToken(res.token); // تخزين التوكن في localStorage
+        this.router.navigate(['/home']); // التوجيه إلى الصفحة الرئيسية
       },
       error: () => {
-        this.error = 'Invalid email or password';
-      }
-    });
-  }
+        this.error = 'Invalid email or password'; // رسالة الخطأ عند الفشل
+      }
+    });
+  }
 }
