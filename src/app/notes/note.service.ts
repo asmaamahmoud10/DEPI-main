@@ -27,13 +27,21 @@ export class NoteService {
    getNotes() {
     const token = this.auth.getToken();
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`  
+      Authorization: `Bearer ${token}`
     });
   
     return this.http.get<any[]>(`${this.baseUrl}/notes`, { headers });
   }
 
-
+  deleteNote(noteId: string) {
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  
+    return this.http.delete(`${this.baseUrl}/notes/${noteId}`, { headers });
+  }
+  
 
 
 }

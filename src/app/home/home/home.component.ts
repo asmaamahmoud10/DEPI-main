@@ -36,8 +36,17 @@ cancelDelete() {
 }
 
 deleteNote(note: any) {
-  this.notes = this.notes.filter(n => n !== note);
-  this.noteToDelete = null;
+  this.noteService.deleteNote(note.id).subscribe({
+    next: () => {
+      this.notes = this.notes.filter(n => n.id !== note.id);
+      this.noteToDelete = null;
+    },
+    error: (err) => {
+      console.error('Error deleting note:', err);
+      alert('There is an error.');
+    }
+  });
 }
+
 
 }
