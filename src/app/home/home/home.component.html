@@ -2,10 +2,24 @@
 <h2>Your Notes</h2>
 
 <div class="notes-container">
-    <div *ngFor="let note of notes" class="note-card">
-        <h2>{{ note.title }}</h2>
-        <p>{{ note.content }}</p>
-        <small>Category: {{ note.category }} | Priority: {{ note.priority }}</small>
-        <div class="tags">Tags: {{ note.tags }}</div>
+  <div *ngFor="let note of notes" class="note-card">
+    <h2>{{ note.title }}</h2>
+    <p>{{ note.content }}</p>
+    <small>Category: {{ note.category }} | Priority: {{ note.priority }}</small>
+    <div class="tags">Tags: {{ note.tags }}</div>
+
+    <div class="note-actions">
+        <button (click)="viewNote(note)">View</button>
+        <button (click)="editNote(note)">Edit</button>
+        <button (click)="confirmDelete(note)">Delete</button>
+        </div>
     </div>
     </div>
+
+    <div *ngIf="noteToDelete" class="popup-overlay">
+    <div class="popup">
+        <p>Are you sure you want to delete this note?</p>
+        <button (click)="deleteNote(noteToDelete)">Yes, Delete</button>
+        <button (click)="cancelDelete()">Cancel</button>
+    </div>
+</div>
