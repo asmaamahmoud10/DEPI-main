@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { HandleerorInterceptor } from "./handleeror.interceptor";
+import { HandleErrorInterceptor } from "./handleerror.interceptor";
 import { JwtInterceptor } from "./jwt.interceptor";
 
 
@@ -12,7 +12,7 @@ export const HttpInterceptorProvider = [
     },
     {
         provide: HTTP_INTERCEPTORS,
-        useClass: HandleerorInterceptor,
+        HandleErrorInterceptor,
         multi: true
     }
 ]

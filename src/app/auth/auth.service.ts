@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../model/user';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -28,4 +30,9 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
   }
+
+  registerApi(data:User){
+    const url = "http://localhost:8000/register";
+   return this.http.post(url,data)
+   }
 }

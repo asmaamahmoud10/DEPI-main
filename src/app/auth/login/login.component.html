@@ -31,7 +31,7 @@
             <div class="button-group">
                 <button type="submit" class="btn login-btn">Login</button>
                 <h3>Don't have an account yet?</h3>
-                <button type="button" class="btn signup-btn">Sign Up</button>
+                <button type="button" class="btn signup-btn" routerLink="/auth/register">Sign Up</button>
             </div>
         </form>
         <p *ngIf="error" style="color:red">{{ error }}</p>
