@@ -2,14 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotesComponent } from './notes.component';
 import { CreateComponent } from './create/create.component';
-import { UpdateComponent } from './update/update.component';
 import { ViewComponent } from './view/view.component';
 import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [{ path: '', component: NotesComponent }
   ,
    { path: 'create', component: CreateComponent , canActivate: [AuthGuard] },
-  { path: 'update/:id', component: UpdateComponent , canActivate: [AuthGuard] },
+  
   { path: 'view/:id', component: ViewComponent , canActivate: [AuthGuard]},
 ];
 

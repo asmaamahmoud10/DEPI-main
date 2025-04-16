@@ -51,6 +51,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { NoteService } from 'src/app/notes/note.service';
 
@@ -62,10 +63,9 @@ import { NoteService } from 'src/app/notes/note.service';
 export class HomeComponent implements OnInit {
   notes: any[] = [];
 
-  constructor(private noteService: NoteService,private authService: AuthService) {}
+  constructor(private noteService: NoteService,private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // استرجاع التوكن من localStorage واستخدامه عند إرسال الطلبات
     const token = this.authService.getToken();
     if (token) {
       this.noteService.getNotes(token).subscribe((data) => {
@@ -82,8 +82,10 @@ viewNote(note: any) {
   console.log("Viewing note", note);
 }
 
+
 editNote(note: any) {
   console.log("Editing note", note);
+  this.router.navigate(['/notes/create'], { state: { noteToEdit: note } });
 }
 
 confirmDelete(note: any) {

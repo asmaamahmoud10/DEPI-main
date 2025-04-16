@@ -82,6 +82,15 @@ export class NoteService {
     });
     return this.http.get<any[]>(`${this.baseUrl}/notes`, { headers });
   }
+  updateNote(noteId: string, noteData: any) {
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.put(`${this.baseUrl}/notes/${noteId}`, noteData, { headers });
+  }
+  
 
   deleteNote(noteId: string) {
     const token = this.auth.getToken();

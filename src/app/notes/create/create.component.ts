@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateComponent {
   noteForm 
  
- 
+  noteToEdit: any = null;
+
 
   //profileData
   adressData
@@ -20,6 +21,15 @@ export class CreateComponent {
     
 
     this.initForm();
+
+
+    ///update the form with the note data if it is in the state
+    const state = history.state;
+    if (state && state.noteToEdit) {
+      this.noteToEdit = state.noteToEdit;
+      this.fillFormWithNoteData();
+    }
+    ///
   }
   initForm() {
     this.noteForm = this.builder.group({
@@ -72,7 +82,7 @@ export class CreateComponent {
 
 
 
-  updatenotes() {
+/*   updatenotes() {
     this.noteForm.patchValue({
       title: 'John',
       content: 'Doe',
@@ -80,7 +90,22 @@ export class CreateComponent {
       priority: 'Doe',
       tags: 'Doe',
     });
+  } */
+
+  fillFormWithNoteData() {
+    if (this.noteToEdit) {
+      this.noteForm.patchValue({
+        title: this.noteToEdit.title,
+        content: this.noteToEdit.content,
+        category: this.noteToEdit.category,
+        priority: this.noteToEdit.priority,
+        tags: this.noteToEdit.tags,
+      });
+    }
   }
+
+
+
   // Method to confirm before updating or saving
  // Method to confirm before updating or saving
 confirmAction(action: string) {
@@ -89,10 +114,31 @@ confirmAction(action: string) {
     if (action === 'save') {
       this.onSubmit();
     } else if (action === 'update') { 
-      this.updatenotes();
+      this.updateNote();
     } else if (action === 'cancel') {
       this.noteForm.reset();
     }
+  }
+}
+updateNote() {
+  if (this.noteForm.valid && this.noteToEdit) {
+    this.isLoading = true;
+    const updatedNote = this.noteForm.value;
+
+    this.noteservice.updateNote(this.noteToEdit.id, updatedNote).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.toastr.success('Note updated successfully');
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 2000);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = 'Something went wrong during update.';
+        console.error(err);
+      }
+    });
   }
 }
 
